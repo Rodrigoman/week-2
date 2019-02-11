@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>To do list</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../main.css">
+    <link href="https://unpkg.com/nes.css/css/nes.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" media="screen" href="tasker.css" />
+</head>
+
+<body>
+    <div class="mainContainer">
+        <header>
+            <a href="/">
+                <h2><i class="snes-logo"></i> Main Menu </h2>
+            </a>
+        </header>
+        <div class="taskApp">
+            <!-- form -->
+            <section class="nes-container with-title margin-bottom-and-top">
+                <h2 class="title">New Task</h2>
+                <div>
+                    <form id="newTaskForm">
+                        <div class="margin-form bottom">
+                            <label for="name">name</label>
+                            <input type="text" name="name" id="name" autocomplete="off" class="nes-input" maxlength=100>
+                        </div>
+                        <div class="margin-form">
+                            <label for="assignee">assignee</label>
+                            <select name="assignee" id="assignee" class="nes-input">
+                                <option value="Frank">Frank</option>
+                                <option value="John">John</option>
+                                <option value="Alice">Alice</option>
+                                <option value="Mary">Mary</option>
+                            </select>
+                        </div>
+                        <div class="margin-form">
+                            <label for="status">status</label>
+                            <div class="radioContainer">
+                                <label>
+                                    <input type="checkbox" name="status" id="status"  class="nes-checkbox" checked="">
+                                    <span>Done</span>
+                                  </label>
+                            </div>
+                        </div>
+                        <div class="margin-form">
+                            <label for="submit">are you suere?</label>                            
+                            <button type="button" name="submit" id="submit" onclick="createtask()" class="nes-btn is-success">ADD TASK</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <!-- table -->
+            <section class="nes-container with-title">
+                <h2 class="title">Current Tasks</h2>
+                <input type="text" placeholder="search" name="search" id="search" autocomplete="off" class="nes-input"  maxlength=100>
+                <div class="margin-form">
+                    <div class="flex-this">
+                        <div>
+                            <label for="statusFilter">status</label>
+                            <div class="">
+                                <label>
+                                    <input type="radio" class="nes-radio" name="statusFilter" value="All" checked="">
+                                    <span>All</span>
+                                </label>
+                                <label>
+                                    <input type="radio" class="nes-radio" name="statusFilter" value="Pending">
+                                    <span>Pending</span>
+                                </label>
+                                <label>
+                                    <input type="radio" class="nes-radio" name="statusFilter" value="Done">
+                                    <span>Done</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                                <label for="statusFilter">sort by date</label>
+                                <div class="">
+                                    <label>
+                                        <input type="radio" class="nes-radio" name="dateOrder" value="asc" checked="">
+                                        <span>Ascending</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" class="nes-radio" name="dateOrder" value="desc">
+                                        <span>Descending</span>
+                                    </label>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nes-table-responsive">
+                    <table class="nes-table is-bordered" id="pokedex">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Assignee</th>
+                                <th>Status</th>
+                                <th>Creation date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- here we will insert our table -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>  <!-- taskApp -->
+        <div class="nes-container secret-message" id="secret-message">
+                <div>
+                    <i class="nes-charmander"></i> <small> Pleas enter a valid name</small>
+                </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="tasker.js"></script>
+
+</html>

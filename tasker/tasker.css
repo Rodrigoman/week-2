@@ -1,0 +1,36 @@
+form {
+    display: flex;
+    flex-flow: wrap;
+}
+th {
+    width: 10%;
+}
+tbody > tr:nth-child(odd){
+    background-color:  #cc4192;
+}
+select {
+    height: 40px;
+    cursor: url(https://unpkg.com/nes.css/assets/cursor-click.png),pointer;
+}
+option {
+    cursor: url(https://unpkg.com/nes.css/assets/cursor-click.png),pointer;
+}
+
+.margin-form{
+    margin-right: 12%;
+}
+.margin-form.bottom{
+    margin-bottom: 25px;
+}
+.radioContainer {
+    margin-top: 5%;
+}
+.flex-this {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+}
+#search {
+    width: 99%;
+    margin-bottom: 25px;
+}
