@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="calculator.css" />
+    <title>Bonus Calculator</title>
+</head>
+
+<body>
+    <div class="mainContainer">
+        <header>
+            <a href="/">
+                <h2><i class="snes-logo"></i> Main Menu </h2>
+            </a>
+        </header>
+        <div class="taskApp">
+            <section class="retro-container  margin-bottom-and-top">
+                <h3 class="title">Calculate your bonus</h3>
+                <div>
+                    <form id="calculatorForm">
+                        <div>
+                            <div class="margin-form bottom">
+                                <label for="salary">salary</label>
+                                <input type="number" step="25" min="0" name="salary" id="salary" value="0" autocomplete="off" class="retro-input"
+                                    maxlength=100>
+                            </div>
+                            <div class="margin-form">
+                                <label for="days">days</label>
+                                <input type="number" min="0" max="365" name="days" id="days" value="0" autocomplete="off" class="retro-input" maxlength=100>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="margin-form bottom">
+                                <label for="years">years</label>
+                                <input type="number" min="0" max="35" name="years" id="years" value="0" autocomplete="off" class="retro-input"
+                                    maxlength=100>
+                            </div>
+                            <div class="margin-form">
+                                <label for="submit">calculate bonus</label>
+                                <button type="button" name="submit" id="submit" onclick="calculateBonus()" class="retro-btn is-success">CALCULATE</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <section class="retro-container margin-bottom-and-top flex-center">
+                <div>
+                    <h2 id="showDays"> Here is your bonus</h2>
+                    <div class="flex-center">
+                        <h1 id="bonusText" class="moneyColor">
+                            $0.00
+                        </h1>
+                        <input type="hidden" name="bonusInput" id="bonusInput" value="0">
+                    </div>
+                </div>
+            </section>
+        </div> <!-- taskApp -->
+        <div class="retro-container secret-message" id="secret-message">
+            <div style=" display: flex; align-items: center; ">
+                <i class="nes-charmander"><img width="50px" src="media/mario.gif" alt="mario"></i> <div id="reason"> </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="calculator.js"></script>
+</html>
