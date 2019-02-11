@@ -1,3 +1,9 @@
-import TaskList from './js/TaskList.class';
+import TaskList from './js/TaskList.class.js';
 
-console.log(TaskList);
+class UI {
+  static getTask() {
+    console.log(new TaskList());
+  }
+}
+
+export default UI;
