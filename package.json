@@ -1,0 +1,26 @@
+{
+  "name": "week2",
+  "version": "1.0.0",
+  "description": "A refactor from week 1",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rodrigo Lozano",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-google": "^0.12.0",
+    "eslint-plugin-import": "^2.16.0"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rodrigoman/week-2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Rodrigoman/week-2/issues"
+  },
+  "homepage": "https://github.com/Rodrigoman/week-2#readme"
+}
