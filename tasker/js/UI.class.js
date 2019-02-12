@@ -58,6 +58,11 @@ class UI {
     this.tasks.removeFromTaskList(taskId);
     this.renderTaskTable();
   }
+
+  updateSortStatus(status) {
+    this.tasks.updateSortStatus(status);
+    this.renderTaskTable();
+  }
 }
 
 
