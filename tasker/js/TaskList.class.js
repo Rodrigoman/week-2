@@ -1,5 +1,7 @@
+import Storage from './Storage.class.js';
+
 export default class TaskList {
-  constructor(task = []) {
-    this.tasks = task;
+  constructor() {
+    this.taskList = Storage.getParsedTaskList();
   }
 }
