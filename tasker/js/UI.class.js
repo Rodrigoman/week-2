@@ -30,6 +30,15 @@ class UI {
     this.addDeleteListener();
   }
 
+  addListenerToRadios() {
+    this.radios.forEach((radio) => {
+      radio.addEventListener('click', (event) => {
+        event.stopPropagation();
+        this.updateSortStatus(radio.value);
+      });
+    });
+  }
+
   /**
    * Create A listener for each item with the given class
    * then calls deleteTask when when the item is clicked
