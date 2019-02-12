@@ -1,3 +1,4 @@
 import UI from './UI.class.js';
 
-console.log(new UI());
+
+new UI().renderTaskTable('#pokedex tbody');
