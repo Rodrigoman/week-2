@@ -8,9 +8,10 @@ class Storage {
 
   /**
    * Stringify and save to Local Storage
+   * @newTaskList the new array to set
    */
-  static setStringifyTaskList() {
-    JSON.stringify(localStorage.getItem('TaskList'));
+  static saveTaskList(newTaskist) {
+    localStorage.setItem('TaskList', JSON.stringify(newTaskist));
   }
 }
 
