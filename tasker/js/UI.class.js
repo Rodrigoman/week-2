@@ -16,7 +16,7 @@ class UI {
    */
   renderTaskTable() {
     let template = '';
-    this.tasks.taskList.forEach((task) => {
+    this.tasks.filteredTaskList.forEach((task) => {
       template += `
           <tr id="row${task.id}" class="editable">
               <td><i class="nes-icon close is-small delete" id="${task.id}" ></i> ${task.id}</td>
