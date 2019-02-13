@@ -51,6 +51,12 @@ class UI {
     });
   }
 
+  addListenerToSearchForm() {
+    this.search.addEventListener('keyup', (event) => {
+      this.updateSearchQuery(event.target.value);
+    });
+  }
+
   /**
    * Create A listener for each item with the given class
    * then calls deleteTask when when the item is clicked
