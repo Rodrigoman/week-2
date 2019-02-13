@@ -35,6 +35,15 @@ export default class TaskList {
     this.filteredTaskList = filters.sort === 'desc' ? this.filteredTaskList.reverse() : this.filteredTaskList;
   }
 
+  set taskList(taskList) {
+    this._taskList = taskList;
+    this.sortTasktList();
+  }
+
+  get taskList() {
+    return this._taskList;
+  }
+
   createTask(name, assignee, status) {
     const id = this.taskList ? this.taskList[this.taskList.length - 1].id + 1 : 1;
     const newTask = new Task(id, name, assignee, status);
