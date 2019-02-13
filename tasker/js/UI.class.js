@@ -82,6 +82,17 @@ class UI {
     });
   }
 
+  createFormObject(form) {
+    const formObj = {};
+    // eslint-disable-next-line no-restricted-syntax
+    for (const field of form) {
+      if (field.name) {
+        formObj[field.name] = field;
+      }
+    }
+    this.form = formObj;
+  }
+
   deleteTask(taskId) {
     this.tasks.removeFromTaskList(taskId);
     this.renderTaskTable();
