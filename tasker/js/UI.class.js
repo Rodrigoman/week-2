@@ -1,4 +1,5 @@
 import TaskList from './TaskList.class.js';
+import ErrorHandler from './error-handler.class.js';
 
 class UI {
   /**
@@ -6,12 +7,15 @@ class UI {
    * where you want to render the table.
    * By default looks for a rbody to render
    */
-  constructor(where = 'tbody') {
+  constructor(where = 'tbody', rules, form) {
     this.where = where;
     this.tasks = new TaskList();
     this.statusRadios = document.querySelectorAll('input[name="statusFilter"]');
     this.sortRadios = document.querySelectorAll('input[name="dateOrder"]');
     this.search = document.querySelector('#search');
+    this.addTask = document.querySelector('#submit');
+    this.errorHandler = new ErrorHandler(rules);
+    this.abstracForm = form;
   }
 
   /**
@@ -57,6 +61,14 @@ class UI {
     });
   }
 
+  addTaskListener() {
+    this.addTask.addEventListener('click', (event) => {
+      event.stopPropagation();
+      this.createFormObject(document.querySelector(this.abstracForm));
+      this.createtask();
+    });
+  }
+
   /**
    * Create A listener for each item with the given class
    * then calls deleteTask when when the item is clicked
@@ -69,6 +81,17 @@ class UI {
         this.deleteTask(Number(event.target.id));
       });
     });
+  }
+
+  createFormObject(form) {
+    const formObj = {};
+    // eslint-disable-next-line no-restricted-syntax
+    for (const field of form) {
+      if (field.name) {
+        formObj[field.name] = field;
+      }
+    }
+    this.form = formObj;
   }
 
   deleteTask(taskId) {
@@ -89,6 +112,37 @@ class UI {
   updateSearchQuery(term) {
     this.tasks.searchInTaskList(term);
     this.renderTaskTable();
+  }
+
+  markAssError() {
+    this.form.name.classList.add('is-error');
+    document.querySelector('#secret-message').classList.remove('secret-message');
+    document.querySelector('#secret-message').classList.add('error-message');
+    this.focusOnName();
+  }
+
+  cleanErrors() {
+    this.form.name.classList.remove('is-error');
+    document.querySelector('#secret-message').classList.remove('error-message');
+    document.querySelector('#secret-message').classList.add('secret-message');
+  }
+
+  focusOnName() {
+    this.form.name.focus();
+  }
+
+  createtask() {
+    this.cleanErrors();
+    const { name, assignee, status } = this.form;
+    if (!this.errorHandler.isValid(name.value)) {
+      this.markAssError();
+      return;
+    }
+    const formatedStatus = status.checked ? 'Done' : 'Pending';
+
+    this.tasks.createTask(name.value, assignee.value, formatedStatus);
+    this.renderTaskTable();
+    this.focusOnName();
   }
 }
 

@@ -1,8 +1,8 @@
 import UI from './UI.class.js';
 
 class Jarvis {
-  constructor(where = 'tbody') {
-    this.UI = new UI(where);
+  constructor(where = 'tbody', rules, form) {
+    this.UI = new UI(where, rules, form);
   }
 
   /**
@@ -21,19 +21,30 @@ class Jarvis {
     return this;
   }
 
-  TheSortFilter() {
+  theSortFilter() {
     this.UI.addListenerToSortRadios();
     return this;
   }
 
-  andTheSearch() {
+  theSearch() {
     this.UI.addListenerToSearchForm();
+    return this;
+  }
+
+  andTheFormToo() {
+    this.UI.addTaskListener();
   }
 }
+const rules = {
+  required: true,
+  maxCharacters: 100,
+};
+const form = '#newTaskForm';
 
-const jarvis = new Jarvis('#pokedex tbody');
+const jarvis = new Jarvis('#pokedex tbody', rules, form);
 
 jarvis.giveMeTheUI('please')
   .makeTheStatusFilterWork()
-  .TheSortFilter()
-  .andTheSearch();
+  .theSortFilter()
+  .theSearch()
+  .andTheFormToo();
