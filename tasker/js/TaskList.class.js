@@ -40,6 +40,7 @@ export default class TaskList {
     const newTask = new Task(id, name, assignee, status);
     this.taskList.push(newTask);
     this.connection.saveTaskList(this.taskList);
+    this.sortTasktList();
   }
 
   updateStatusStatus(status) {
