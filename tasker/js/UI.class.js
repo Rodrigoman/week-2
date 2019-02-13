@@ -112,6 +112,37 @@ class UI {
     this.tasks.searchInTaskList(term);
     this.renderTaskTable();
   }
+
+  markAssError() {
+    this.form.name.classList.add('is-error');
+    document.querySelector('#secret-message').classList.remove('secret-message');
+    document.querySelector('#secret-message').classList.add('error-message');
+    this.focusOnName();
+  }
+
+  cleanErrors() {
+    this.form.name.classList.remove('is-error');
+    document.querySelector('#secret-message').classList.remove('error-message');
+    document.querySelector('#secret-message').classList.add('secret-message');
+  }
+
+  focusOnName() {
+    this.form.name.focus();
+  }
+
+  createtask() {
+    this.cleanErrors();
+    const { name, assignee, status } = this.form;
+    if (!this.errorHandler.isValid(name.value)) {
+      this.markAssError();
+      return;
+    }
+    const formatedStatus = status.checked ? 'Done' : 'Pending';
+
+    this.tasks.createTask(name.value, assignee.value, formatedStatus);
+    this.renderTaskTable();
+    this.focusOnName();
+  }
 }
 
 
