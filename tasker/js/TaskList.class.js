@@ -18,18 +18,31 @@ export default class TaskList {
   }
 
   sortTasktList() {
-    const filter = this.currentFilters;
+    const filters = this.currentFilters;
+
     this.filteredTaskList = this.taskList.filter((task) => {
-      if (filter.status !== 'All') {
-        return (task.status === filter.status
-           && task.name.toLowerCase().includes(filter.search.toLowerCase()));
+      if (filters.status !== 'All') {
+        return (task.status === filters.status
+          && task.name.toLowerCase().includes(filters.search.toLowerCase()));
       }
-      return task.name.toLowerCase().includes(filter.search.toLowerCase());
+      return task.name.toLowerCase().includes(filters.search.toLowerCase());
     });
+
+    this.filteredTaskList = filters.sort === 'desc' ? this.filteredTaskList.reverse() : this.filteredTaskList;
   }
 
-  updateSortStatus(status) {
+  updateStatusStatus(status) {
     this.currentFilters.status = status;
+    this.sortTasktList();
+  }
+
+  updateSortsStatus(status) {
+    this.currentFilters.sort = status;
+    this.sortTasktList();
+  }
+
+  searchInTaskList(term) {
+    this.currentFilters.search = term;
     this.sortTasktList();
   }
 }
