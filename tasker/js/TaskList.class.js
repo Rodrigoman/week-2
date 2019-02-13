@@ -17,7 +17,8 @@ export default class TaskList {
    */
   removeFromTaskList(taskId) {
     this.taskList = this.taskList.filter(task => task.id !== taskId);
-    Storage.saveTaskList(this.taskList);
+    this.connection.saveTaskList(this.taskList);
+    this.sortTasktList();
   }
 
   sortTasktList() {
