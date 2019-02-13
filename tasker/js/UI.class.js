@@ -1,4 +1,5 @@
 import TaskList from './TaskList.class.js';
+import ErrorHandler from './error-handler.class.js';
 
 class UI {
   /**
