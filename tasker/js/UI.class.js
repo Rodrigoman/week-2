@@ -77,7 +77,17 @@ class UI {
   }
 
   updateSortStatus(status) {
-    this.tasks.updateSortStatus(status);
+    this.tasks.updateSortsStatus(status);
+    this.renderTaskTable();
+  }
+
+  updateStatusStatus(status) {
+    this.tasks.updateStatusStatus(status);
+    this.renderTaskTable();
+  }
+
+  updateSearchQuery(term) {
+    this.tasks.searchInTaskList(term);
     this.renderTaskTable();
   }
 }
