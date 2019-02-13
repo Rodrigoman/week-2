@@ -33,8 +33,17 @@ class UI {
     this.addDeleteListener();
   }
 
-  addListenerToRadios() {
-    this.radios.forEach((radio) => {
+  addListenerToStatusRadios() {
+    this.statusRadios.forEach((radio) => {
+      radio.addEventListener('click', (event) => {
+        event.stopPropagation();
+        this.updateStatusStatus(radio.value);
+      });
+    });
+  }
+
+  addListenerToSortRadios() {
+    this.sortRadios.forEach((radio) => {
       radio.addEventListener('click', (event) => {
         event.stopPropagation();
         this.updateSortStatus(radio.value);
