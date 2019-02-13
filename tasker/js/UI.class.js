@@ -6,7 +6,7 @@ class UI {
    * where you want to render the table.
    * By default looks for a rbody to render
    */
-  constructor(where = 'tbody') {
+  constructor(where = 'tbody', rules, form) {
     this.where = where;
     this.tasks = new TaskList();
     this.statusRadios = document.querySelectorAll('input[name="statusFilter"]');
