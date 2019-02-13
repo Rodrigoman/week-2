@@ -7,7 +7,8 @@ export default class TaskList {
     this.connection = new Storage();
     this.taskList = this.connection.getParsedTaskList();
     this.currentFilters = new Filters();
-    this.filteredTaskList = this.taskList;
+    this._taskList = null;
+    this.taskList = this.connection.getParsedTaskList();
   }
 
   /**
