@@ -12,6 +12,9 @@ class UI {
     this.statusRadios = document.querySelectorAll('input[name="statusFilter"]');
     this.sortRadios = document.querySelectorAll('input[name="dateOrder"]');
     this.search = document.querySelector('#search');
+    this.addTask = document.querySelector('#submit');
+    this.errorHandler = new ErrorHandler(rules);
+    this.abstracForm = form;
   }
 
   /**
