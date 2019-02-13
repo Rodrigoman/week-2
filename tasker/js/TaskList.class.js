@@ -5,7 +5,6 @@ import Task from './task.class.js';
 export default class TaskList {
   constructor() {
     this.connection = new Storage();
-    this.taskList = this.connection.getParsedTaskList();
     this.currentFilters = new Filters();
     this._taskList = null;
     this.taskList = this.connection.getParsedTaskList();
