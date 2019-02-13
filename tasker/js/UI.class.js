@@ -9,7 +9,9 @@ class UI {
   constructor(where = 'tbody') {
     this.where = where;
     this.tasks = new TaskList();
-    this.radios = document.querySelectorAll('input[name="statusFilter"]');
+    this.statusRadios = document.querySelectorAll('input[name="statusFilter"]');
+    this.sortRadios = document.querySelectorAll('input[name="dateOrder"]');
+    this.search = document.querySelector('#search');
   }
 
   /**
