@@ -1,0 +1,28 @@
+form {
+    display: flex;
+    flex-flow: wrap;
+}
+
+.margin-form{
+    margin-right: 12%;
+}
+.margin-form.bottom{
+    margin-bottom: 25px;
+}
+.taskApp {
+    display: flex;
+    flex-flow: wrap;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.moneyColor{
+    color: #92cc41;
+}
+.busy {
+    background-color: gray !important;
+    box-shadow: inset -6px -6px grey !important;
+}
