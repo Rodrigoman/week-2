@@ -60,7 +60,7 @@ export default class TaskList {
   }
 
   createTask(name, assignee, status) {
-    const id = this.taskList ? this.taskList[this.taskList.length - 1].id + 1 : 1;
+    const id = this.taskList.length !== 0 ? this.taskList[this.taskList.length - 1].id + 1 : 1;
     const newTask = new Task(id, name, assignee, status);
     this.taskList.push(newTask);
     this.connection.saveTaskList(this.taskList);
