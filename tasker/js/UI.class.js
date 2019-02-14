@@ -84,6 +84,50 @@ class UI {
     });
   }
 
+  modifyRow(cells) {
+    if (typeof cells === 'object') {
+      for (const cell of cells) {
+        const { classList } = cell;
+        if (classList.contains('replaceable')) {
+          cell.innerHTML = `<input type="text" id="edit-${classList.item(1)}-${classList.item(2)}" 
+          autocomplete="off" value="${cell.innerHTML}" class="nes-input">`;
+        }
+        if (classList.contains('assignee')) {
+          cell.innerHTML = `
+          <select id="edit-${classList.item(1)}-assignee" class="nes-input">
+            <option value="Frank">Frank</option>
+            <option value="John">John</option>
+            <option value="Alice">Alice</option>
+            <option value="Mary">Mary</option>
+          </select>`;
+        }
+        if (classList.contains('status')) {
+          const firstStatus = cell.innerHTML === 'Done' ? 'Done' : 'Pending';
+          const secondStatus = firstStatus === 'Done' ? 'Pending' : 'Done';
+
+          cell.innerHTML = ` <select id="edit-${classList.item(1)}-status" class="nes-input">
+            <option value="${firstStatus}">${firstStatus}</option>
+            <option value="${secondStatus}">${secondStatus}</option>
+        </select>`;
+        }
+        if (classList.contains('time')) {
+          cell.innerHTML = `<button type="button" name="submit" id="edit-${classList.item(1)}"
+            class="nes-btn is-success editItem">save</button>`;
+        }
+      }
+      document.querySelector('.editItem').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idToEdit = e.target.attributes.id.value;
+        const id = idToEdit.slice(5, idToEdit.length);
+        const name = document.querySelector(`#edit-${id}-name`).value;
+        const assignee = document.querySelector(`#edit-${id}-assignee`).value;
+        const status = document.querySelector(`#edit-${id}-status`).value;
+        this.editTask({
+          id, name, assignee, status,
+        });
+      });
+    } // end if is iterable
+  }
 
   addEditListener() {
     document.querySelectorAll(`${this.where} tr`).forEach((row) => {
