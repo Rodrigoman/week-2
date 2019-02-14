@@ -1,13 +1,14 @@
 class Storage {
-  constructor() {
+  constructor(from) {
     this.db = localStorage;
+    this.from = from;
   }
 
   /**
    * gets and parse the TaskList from Local Storage
    */
   getParsedTaskList() {
-    return JSON.parse(this.db.getItem('TaskList'));
+    return JSON.parse(this.db.getItem(this.from));
   }
 
   /**
@@ -15,7 +16,7 @@ class Storage {
    * @newTaskList the new array to set
    */
   saveTaskList(newTaskist) {
-    this.db.setItem('TaskList', JSON.stringify(newTaskist));
+    this.db.setItem(this.from, JSON.stringify(newTaskist));
   }
 }
 
