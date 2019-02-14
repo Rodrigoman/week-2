@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import Storage from './Storage.class.js';
 import Filters from './filters.class.js';
 import Task from './task.class.js';
@@ -17,7 +18,22 @@ export default class TaskList {
   removeFromTaskList(taskId) {
     this.taskList = this.taskList.filter(task => task.id !== taskId);
     this.connection.saveTaskList(this.taskList);
-    this.sortTasktList();
+  }
+
+  editFromTaskList(editedTask) {
+    const {
+      id, name, assignee, status,
+    } = editedTask;
+
+    this.taskList = this.taskList.map((task) => {
+      if (Number(id) === task.id) {
+        task.name = name;
+        task.assignee = assignee;
+        task.status = status;
+      }
+      return task;
+    });
+    this.connection.saveTaskList(this.taskList);
   }
 
   sortTasktList() {
