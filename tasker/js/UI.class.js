@@ -27,14 +27,15 @@ class UI {
       template += `
           <tr id="row${task.id}" class="editable">
               <td><i class="nes-icon close is-small delete" id="${task.id}" ></i> ${task.id}</td>
-              <td>${task.name}</td>
-              <td>${task.assignee}</td>
-              <td>${task.status}</td>
-              <td>${moment(task.date).format('Y/M/d h:ss')}</td>
+              <td class="replaceable ${task.id} name">${task.name}</td>
+              <td class="replaceable ${task.id} assignee">${task.assignee}</td>
+              <td class="replaceable ${task.id} status">${task.status}</td>
+              <td class="replaceable ${task.id} time">${moment(task.date).format('Y/M/d h:ss')}</td>
           </tr>`;
     });
     document.querySelector(this.where).innerHTML = template;
     this.addDeleteListener();
+    this.addEditListener();
   }
 
   addListenerToStatusRadios() {
@@ -81,6 +82,23 @@ class UI {
         this.deleteTask(Number(event.target.id));
       });
     });
+  }
+
+
+  addEditListener() {
+    document.querySelectorAll(`${this.where} tr`).forEach((row) => {
+      row.addEventListener('click', (event) => {
+        event.stopPropagation();
+
+        const { cells } = event.path[1];
+        this.modifyRow(cells);
+      }, { once: true });
+    });
+  }
+
+  editTask(editedTask) {
+    this.tasks.editFromTaskList(editedTask);
+    this.renderTaskTable();
   }
 
   createFormObject(form) {
