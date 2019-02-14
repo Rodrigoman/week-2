@@ -2,6 +2,11 @@ form {
     display: flex;
     flex-flow: wrap;
 }
+.App{
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-around;
+}
 
 .margin-form{
     margin-right: 12%;
