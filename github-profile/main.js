@@ -1,12 +1,14 @@
 class GitHubFy {
-  constructor() {
+  constructor({
+    searchForm, repoList, searchUserInput, searchUserBtn,
+  }) {
     this.headers = {
       Authorization: 'token 7780b41a1bbd1a474133226c842cebaaba84e84d',
     };
-    this.searchForm = document.querySelector('#searchForm');
-    this.renderRepoInformationIn = document.querySelector('#repoInfo');
-    this.searchUserInput = document.querySelector('#user');
-    this.searchUserBtn = document.querySelector('#submit');
+    this.searchForm = searchForm;
+    this.renderRepoInformationIn = repoList;
+    this.searchUserInput = searchUserInput;
+    this.searchUserBtn = searchUserBtn;
     this.busy = false;
     this.similarUsers = { total_count: 0 };
   }
@@ -150,6 +152,11 @@ class GitHubFy {
   }
 }
 
-
-const github = new GitHubFy();
+const UI = {
+  searchForm: document.querySelector('#searchForm'),
+  repoList: document.querySelector('#repoInfo'),
+  searchUserInput: document.querySelector('#user'),
+  searchUserBtn: document.querySelector('#submit'),
+};
+const github = new GitHubFy(UI);
 github.listenToSearchAction();
