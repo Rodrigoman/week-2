@@ -8,6 +8,7 @@ class GitHubFy {
     this.searchUserInput = document.querySelector('#user');
     this.searchUserBtn = document.querySelector('#submit');
     this.busy = false;
+    this.similarUsers = { total_count: 0 };
   }
 
   async checkForUser() {
@@ -18,6 +19,7 @@ class GitHubFy {
       this.renderRepositories();
       this.renderUserBio();
     } else {
+      await this.searchSimilarUsers();
       this.notFound();
     }
     this.searchUserBtn.classList.remove('busy');
@@ -36,6 +38,13 @@ class GitHubFy {
     this.repos = await repos.json().then(repoJson => repoJson);
   }
 
+  async searchSimilarUsers() {
+    this.busy = true;
+    this.searchUserBtn.classList.add('busy');
+    const similarUsers = await fetch(`https://api.github.com/search/users?q=${this.query}`, { headers: this.headers });
+    this.similarUsers = await similarUsers.json().then(userJson => userJson);
+  }
+
   static isnull(value, defaultValue) {
     if (value === null || value === '') {
       return defaultValue;
@@ -45,6 +54,17 @@ class GitHubFy {
   }
 
   notFound() {
+    let reason = `User '${this.query}' not found,try with this one: `;
+    let userList = '';
+    if (this.similarUsers.total_count === 0) {
+      reason = 'You are the firs to think about that name, try  with another';
+    } else {
+      const suggestedUser = this.similarUsers.items[0].login;
+      userList = `<span >${suggestedUser}</span>`;
+      this.searchUserInput.value = suggestedUser;
+      reason += userList;
+    }
+    document.querySelector('#reason').innerHTML = reason;
     this.searchUserInput.classList.add('is-error');
     document.querySelector('#secret-message').classList.remove('secret-message');
     document.querySelector('#secret-message').classList.add('error-message');
@@ -94,9 +114,12 @@ class GitHubFy {
     this.searchForm.addEventListener('submit', (event) => {
       event.preventDefault();
       const query = document.querySelector('#user').value;
-      if ((this.busy === false) && (this.query !== query)) {
+      const regex = RegExp('^[a-zA-Z0-9]');
+      if ((this.busy === false) && (this.query !== query) && (regex.test(query))) {
         this.query = query;
         this.checkForUser();
+      } else {
+        this.notFound();
       }
     });
   }
