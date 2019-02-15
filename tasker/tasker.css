@@ -30,6 +30,9 @@ option {
     flex-flow: wrap;
     justify-content: space-between;
 }
+.replaceable > .nes-input {
+    width: 90%;
+}
 #search {
     width: 99%;
     margin-bottom: 25px;
