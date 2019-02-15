@@ -120,8 +120,6 @@ class GitHubFy {
       if ((this.busy === false) && (this.query !== query) && (regex.test(query))) {
         this.query = query;
         this.checkForUser();
-      } else {
-        this.notFound();
       }
     });
   }
