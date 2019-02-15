@@ -5,7 +5,7 @@ import Task from './task.class.js';
 
 export default class TaskList {
   constructor() {
-    this.connection = new Storage();
+    this.connection = new Storage('TaskList');
     this.currentFilters = new Filters();
     this._taskList = null;
     this.taskList = this.connection.getParsedTaskList();
@@ -60,7 +60,7 @@ export default class TaskList {
   }
 
   createTask(name, assignee, status) {
-    const id = this.taskList ? this.taskList[this.taskList.length - 1].id + 1 : 1;
+    const id = this.taskList.length !== 0 ? this.taskList[this.taskList.length - 1].id + 1 : 1;
     const newTask = new Task(id, name, assignee, status);
     this.taskList.push(newTask);
     this.connection.saveTaskList(this.taskList);
