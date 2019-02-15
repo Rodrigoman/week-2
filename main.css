@@ -76,10 +76,16 @@ a, button {
     border-radius: 4px;
     padding: 1.5rem 2rem;
 }
-.retro-container:focus-within {
+.retro-container.is-rounded {
+    color: #212529;
+    border: none;
+    border-radius: 0;
+    box-shadow: 0 -4px #fff, 0 -8px, 4px 0 #fff, 4px -4px, 8px 0, 0 4px #fff, 0 8px, -4px 0 #fff, -4px 4px, -8px 0, -4px -4px, 4px 4px;
+}
+/* .first:focus-within {
     background: #7b41cc;
     color: #000000;
-  }
+  } */
 .retro-input {
     font-family: inherit;
     width: 100%;

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Git Hub Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://unpkg.com/nes.css/css/nes.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="github.css">
+</head>
+
+<body>
+    <div class="mainContainer">
+        <header>
+            <a href="/">
+                <h2><i class="snes-logo"></i> Main Menu </h2>
+            </a>
+        </header>
+        <div class="App">
+            <section class="retro-container  margin-bottom-and-top first">
+                <h3 class="title">Search for a user</h3>
+                <div>
+                    <form id="searchForm" action="">
+                        <div>
+                            <div class="margin-form bottom">
+                                <label for="user">User name</label>
+                                <input type="text" name="user" id="user" autocomplete="off" class="retro-input"
+                                    placeholder="Enter a user name">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="margin-form">
+                                <label for="submit">Press search</label>
+                                <button type="submit" name="submit" id="submit" class="retro-btn is-success">SEARCH</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id="bio">
+                   
+                </div>
+            </section>
+            <section class="retro-container margin-bottom-and-top flex-center list is-dark">
+                <div>
+                    <h3 class="title">Repository list</h3>
+                    <div id="repoInfo" style=" display: flex; flex-flow: wrap; justify-content: center; ">
+
+                    </div>
+                </div>
+            </section>
+        </div> <!-- App -->
+        <div class="retro-container secret-message " id="secret-message">
+            <div style=" display: flex; align-items: center; ">
+                <i class="nes-charmander"></i>
+                <div id="reason"> User Not found, try to search another </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="main.js"></script>
+
+</html>
