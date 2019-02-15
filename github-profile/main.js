@@ -1,6 +1,6 @@
 class GitHubFy {
   constructor({
-    searchForm, repoList, searchUserInput, searchUserBtn,
+    searchForm, repoList, searchUserInput, searchUserBtn, sortByRadios,
   }) {
     this.headers = {
       Authorization: 'token 7780b41a1bbd1a474133226c842cebaaba84e84d',
@@ -11,6 +11,8 @@ class GitHubFy {
     this.searchUserBtn = searchUserBtn;
     this.busy = false;
     this.similarUsers = { total_count: 0 };
+    this.sortByRadios = sortByRadios;
+    this.sortBy = 'Stars';
   }
 
   async checkForUser() {
@@ -18,6 +20,7 @@ class GitHubFy {
     await this.searchUser();
     if (this.user.message !== 'Not Found') {
       await this.getRepos();
+      this.updateSortBy();
       this.renderRepositories();
       this.renderUserBio();
     } else {
@@ -148,6 +151,40 @@ class GitHubFy {
     }
     this.renderRepoInformationIn.innerHTML = template;
   }
+
+  addListenerToSortRadios() {
+    this.sortByRadios.forEach((radio) => {
+      radio.addEventListener('click', (event) => {
+        event.stopPropagation();
+        this.sortBy = radio.value;
+        this.updateSortBy();
+        if (this.query !== undefined) {
+          this.renderRepositories();
+        }
+      });
+    });
+  }
+
+  updateSortBy() {
+    if (this.repos !== undefined) {
+      let compare = null;
+      switch (this.sortBy) {
+        case 'Stars':
+          compare = 'stargazers_count';
+          break;
+        case 'Forks':
+          compare = 'forks_count';
+          break;
+        case 'Watchers':
+          compare = 'watchers_count';
+          break;
+        default:
+          compare = 'stargazers_count';
+          break;
+      }
+      this.repos = this.repos.sort((a, b) => (a[compare] > b[compare] ? -1 : 1));
+    }
+  }
 }
 
 const UI = {
@@ -155,6 +192,8 @@ const UI = {
   repoList: document.querySelector('#repoInfo'),
   searchUserInput: document.querySelector('#user'),
   searchUserBtn: document.querySelector('#submit'),
+  sortByRadios: document.querySelectorAll('input[name="starSort"]'),
 };
 const github = new GitHubFy(UI);
+github.addListenerToSortRadios();
 github.listenToSearchAction();
