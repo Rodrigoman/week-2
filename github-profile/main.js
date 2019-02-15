@@ -6,6 +6,8 @@ class GitHubFy {
     this.searchForm = document.querySelector('#searchForm');
     this.renderRepoInformationIn = document.querySelector('#repoInfo');
     this.searchUserInput = document.querySelector('#user');
+    this.searchUserBtn = document.querySelector('#submit');
+    this.busy = false;
   }
 
   async checkForUser() {
@@ -18,9 +20,13 @@ class GitHubFy {
     } else {
       this.notFound();
     }
+    this.searchUserBtn.classList.remove('busy');
+    this.busy = false;
   }
 
   async searchUser() {
+    this.busy = true;
+    this.searchUserBtn.classList.add('busy');
     const user = await fetch(`https://api.github.com/users/${this.query}`, { headers: this.headers });
     this.user = await user.json().then(userJson => userJson);
   }
@@ -63,7 +69,7 @@ class GitHubFy {
             <img src="${this.user.avatar_url}" width="120px">
         </div>
         <div class="info-bio" style=" width: 100px; ">
-            <h3 class="title">${name}</h3>
+            <h3 class="title truncate-text">${name}</h3>
             <small>Since:${moment(this.user.created_at).format('YYYY')}</small>
             <small>Location:${location}</small><br>
             <small>repositories:${this.repos.length}</small>
@@ -75,7 +81,7 @@ class GitHubFy {
             Followers : ${this.user.followers} <br>
             Followings: ${this.user.following} <br>
         </small>
-        <small> company: ${company} <br> 
+        <small class="truncate-text"> company: ${company} <br> 
             blog: <p class="truncate-text"><a href="${blog}" target="_blank">
              ${blog}</a></p><br>
         </small>
@@ -88,8 +94,10 @@ class GitHubFy {
     this.searchForm.addEventListener('submit', (event) => {
       event.preventDefault();
       const query = document.querySelector('#user').value;
-      this.query = query;
-      this.checkForUser();
+      if ((this.busy === false) && (this.query !== query)) {
+        this.query = query;
+        this.checkForUser();
+      }
     });
   }
 
@@ -101,7 +109,7 @@ class GitHubFy {
         this.user.totalStars += repo.stargazers_count;
         template += `
         <div class="retro-container is-rounded repo">
-        <h5 class="repo-name"><a href="${repo.html_url}" target="_blank"> ${repo.name}</a></h5>
+        <h5 class="repo-name truncate-text"><a href="${repo.html_url}" target="_blank"> ${repo.name}</a></h5>
         <i class="nes-icon star"></i> ${repo.stargazers_count}
         <br>
         <br>

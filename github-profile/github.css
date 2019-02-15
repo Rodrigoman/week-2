@@ -13,6 +13,7 @@ form {
 }
 .list{
     flex: 2;
+    margin-left: calc(1%);
 }
 .info{
     display: flex;
