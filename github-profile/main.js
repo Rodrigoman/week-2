@@ -1,11 +1,16 @@
 class GitHubFy {
-  constructor() {
+  constructor({
+    searchForm, repoList, searchUserInput, searchUserBtn,
+  }) {
     this.headers = {
       Authorization: 'token 7780b41a1bbd1a474133226c842cebaaba84e84d',
     };
-    this.searchForm = document.querySelector('#searchForm');
-    this.renderRepoInformationIn = document.querySelector('#repoInfo');
-    this.searchUserInput = document.querySelector('#user');
+    this.searchForm = searchForm;
+    this.renderRepoInformationIn = repoList;
+    this.searchUserInput = searchUserInput;
+    this.searchUserBtn = searchUserBtn;
+    this.busy = false;
+    this.similarUsers = { total_count: 0 };
   }
 
   async checkForUser() {
@@ -16,11 +21,16 @@ class GitHubFy {
       this.renderRepositories();
       this.renderUserBio();
     } else {
+      await this.searchSimilarUsers();
       this.notFound();
     }
+    this.searchUserBtn.classList.remove('busy');
+    this.busy = false;
   }
 
   async searchUser() {
+    this.busy = true;
+    this.searchUserBtn.classList.add('busy');
     const user = await fetch(`https://api.github.com/users/${this.query}`, { headers: this.headers });
     this.user = await user.json().then(userJson => userJson);
   }
@@ -28,6 +38,13 @@ class GitHubFy {
   async getRepos() {
     const repos = await fetch(`https://api.github.com/users/${this.query}/repos`, { headers: this.headers });
     this.repos = await repos.json().then(repoJson => repoJson);
+  }
+
+  async searchSimilarUsers() {
+    this.busy = true;
+    this.searchUserBtn.classList.add('busy');
+    const similarUsers = await fetch(`https://api.github.com/search/users?q=${this.query}`, { headers: this.headers });
+    this.similarUsers = await similarUsers.json().then(userJson => userJson);
   }
 
   static isnull(value, defaultValue) {
@@ -39,6 +56,17 @@ class GitHubFy {
   }
 
   notFound() {
+    let reason = `User '${this.query}' not found,try with this one: `;
+    let userList = '';
+    if (this.similarUsers.total_count === 0) {
+      reason = 'You are the firs to think about that name, try  with another';
+    } else {
+      const suggestedUser = this.similarUsers.items[0].login;
+      userList = `<span >${suggestedUser}</span>`;
+      this.searchUserInput.value = suggestedUser;
+      reason += userList;
+    }
+    document.querySelector('#reason').innerHTML = reason;
     this.searchUserInput.classList.add('is-error');
     document.querySelector('#secret-message').classList.remove('secret-message');
     document.querySelector('#secret-message').classList.add('error-message');
@@ -63,7 +91,7 @@ class GitHubFy {
             <img src="${this.user.avatar_url}" width="120px">
         </div>
         <div class="info-bio" style=" width: 100px; ">
-            <h3 class="title">${name}</h3>
+            <h3 class="title truncate-text">${name}</h3>
             <small>Since:${moment(this.user.created_at).format('YYYY')}</small>
             <small>Location:${location}</small><br>
             <small>repositories:${this.repos.length}</small>
@@ -75,7 +103,7 @@ class GitHubFy {
             Followers : ${this.user.followers} <br>
             Followings: ${this.user.following} <br>
         </small>
-        <small> company: ${company} <br> 
+        <small class="truncate-text"> company: ${company} <br> 
             blog: <p class="truncate-text"><a href="${blog}" target="_blank">
              ${blog}</a></p><br>
         </small>
@@ -88,8 +116,13 @@ class GitHubFy {
     this.searchForm.addEventListener('submit', (event) => {
       event.preventDefault();
       const query = document.querySelector('#user').value;
-      this.query = query;
-      this.checkForUser();
+      const regex = RegExp('^[a-zA-Z0-9]');
+      if ((this.busy === false) && (this.query !== query) && (regex.test(query))) {
+        this.query = query;
+        this.checkForUser();
+      } else {
+        this.notFound();
+      }
     });
   }
 
@@ -101,7 +134,7 @@ class GitHubFy {
         this.user.totalStars += repo.stargazers_count;
         template += `
         <div class="retro-container is-rounded repo">
-        <h5 class="repo-name"><a href="${repo.html_url}" target="_blank"> ${repo.name}</a></h5>
+        <h5 class="repo-name truncate-text"><a href="${repo.html_url}" target="_blank"> ${repo.name}</a></h5>
         <i class="nes-icon star"></i> ${repo.stargazers_count}
         <br>
         <br>
@@ -119,6 +152,11 @@ class GitHubFy {
   }
 }
 
-
-const github = new GitHubFy();
+const UI = {
+  searchForm: document.querySelector('#searchForm'),
+  repoList: document.querySelector('#repoInfo'),
+  searchUserInput: document.querySelector('#user'),
+  searchUserBtn: document.querySelector('#submit'),
+};
+const github = new GitHubFy(UI);
 github.listenToSearchAction();
