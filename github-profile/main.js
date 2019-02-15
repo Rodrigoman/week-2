@@ -59,7 +59,7 @@ class GitHubFy {
     let reason = `User '${this.query}' not found,try with this one: `;
     let userList = '';
     if (this.similarUsers.total_count === 0) {
-      reason = 'You are the firs to think about that name, try  with another';
+      reason = 'You are the first to think about that name, try  with another one';
     } else {
       const suggestedUser = this.similarUsers.items[0].login;
       userList = `<span >${suggestedUser}</span>`;
